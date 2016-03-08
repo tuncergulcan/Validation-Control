@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>    
+<head>
+    <title>Validation Count </title>
+    <meta charset="utf-8">
+
+ <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+ <script src="livevalidation_standalone.js"></script>
+    <style>
+        .LV_validationControl{ font-size: 22px;}
+    </style>
+        </head>    
+<body>
+    <div id="divContent" style="padding-top:75px; width:500px; margin:auto">
+    <form action="#" id="Form">
+        
+         <div class="form-group">
+                <input type="text" class="form-control" id="Name" placeholder="Name">
+          </div>
+            <script type="text/javascript">
+                var NameVal = new LiveValidation('Name', { onValid: function () { } });
+               NameVal.add(Validate.Presence, { failureMessage: '*Enter your name ' });
+            </script>
+
+             <div class="form-group">
+                <input type="text" class="form-control" id="Surname" placeholder="Surname">
+          </div>
+            <script type="text/javascript">
+                var SurnameVal = new LiveValidation('Surname', { onValid: function () { } });
+               SurnameVal.add(Validate.Presence, { failureMessage: '*Enter your surname ' });
+            </script>
+        
+        <div class="form-group">
+                <input type="text" class="form-control" id="Password" placeholder="Password">
+          </div>
+            <script type="text/javascript">
+                var PasswordVal = new LiveValidation('Password', { onValid: function () { } });
+               PasswordVal.add(Validate.Presence, { failureMessage: '*Enter your password ' });
+            </script>
+        
+        <input type="button" value="Send" onclick=" LV_validationControl(); $('#Form').submit()"> 
+        </form>
+    </div>
+</body>
+<html>
+    <script>
+       
+   function LV_validationControl() {
+    setTimeout(function () {
+        $("#divContent ").each(function () {
+            if ($(".LV_validation_message").text() != "") {
+                var temp = $(".LV_validation_message").text();
+                var count = (temp.match(/\*/g) || []).length;
+                $('#LV_validationControl .LV_validationControl').html(count);
+            }
+            if (count > 0) {
+                $("#LV_validationControl").modal();
+            }
+        });
+    }, 100);
+    $('body').append('<div class="modal fade" tabindex="-1" role="dialog" id="LV_validationControl">\
+    <div class="modal-dialog modal-lg"> \
+        <div class="modal-content"> \
+            <div class="modal-header"> \
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> \
+                <h4 class="modal-title">Warning</h4> \
+            </div> \
+            <div class="modal-body p25"> \
+                <div class="alert alert-danger"> \
+                  <p>The number of mandatory fields to be filled in the page is: <b><span class="LV_validationControl"></span></b></p> \
+                </div> \
+            </div> \
+            <div class="modal-footer"> \
+                <button type="submit" class="btn btn-primary" data-dismiss="modal">Ok</button> \
+            </div> \
+        </div> \
+    </div> \
+</div>');
+}
+    </script>
